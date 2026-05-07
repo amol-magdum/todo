@@ -7,48 +7,53 @@
     box-sizing: border-box;
 }
 
+body {
+    min-height: 100vh;
+    background: radial-gradient(circle at top, rgba(255,255,255,0.95), rgba(255,255,255,0) 40%),
+        linear-gradient(160deg, #1f2a6d 0%, #4e0860 55%, #ff5d3d 100%);
+}
+
 .container {
     width: 100%;
     min-height: 100vh;
-    background: linear-gradient(135deg, #153677, #4e085f, #fff000);
-    padding: 10px;
-    padding-left: max(10px, env(safe-area-inset-left));
-    padding-right: max(10px, env(safe-area-inset-right));
-    padding-bottom: max(10px, env(safe-area-inset-bottom));
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .todo-app {
-    /* width: 100%; */
-    max-width: 540px;
-    background: white;
-    margin: 50px auto 20px;
-    padding: 25px 20px 50px;
-    border-radius: 10px;
+    width: min(100%, 560px);
+    background: rgba(255, 255, 255, 0.96);
+    margin: 24px auto;
+    padding: 22px 20px 24px;
+    border-radius: 22px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.14);
+    border: 1px solid rgba(255, 255, 255, 0.65);
 }
 
 .todo-app h2 {
-    color: #002765;
+    color: #132051;
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
+    gap: 12px;
+    margin-bottom: 18px;
+    font-size: 1.6rem;
 }
 
 .todo-app h2 img {
-    width: 40px;
-    margin-left: 10px;
-    margin-right: 10px;
+    width: 42px;
 }
 
 .row {
     width: 100%;
     display: flex;
-    /* flex-direction: column; */
     align-items: center;
-    /* justify-content: space-between; */
-    background: #dddee1;
-    border-radius: 30px;
-    padding-left: 20px;
-    margin-bottom: 25px;
+    gap: 12px;
+    background: #f3f4f7;
+    border-radius: 999px;
+    padding: 12px 16px;
+    margin-bottom: 28px;
 }
 
 input {
@@ -56,122 +61,165 @@ input {
     border: none;
     outline: none;
     background: transparent;
-    padding: 10px;
+    padding: 14px 0;
     font-size: 16px;
-    min-height: 44px;
-    -webkit-appearance: none;
-    appearance: none;
+    min-height: 48px;
+    color: #1e1e2d;
+}
+
+input::placeholder {
+    color: #8a8d9b;
 }
 
 button {
     border: none;
     outline: none;
-    padding: 16px 50px;
-    background: #ff5945;
+    padding: 14px 34px;
+    background: linear-gradient(135deg, #ff6e53, #ff3f4c);
     color: #fff;
-    font-size: 16px;
+    font-size: 15px;
     cursor: pointer;
-    border-radius: 40px;
-    min-height: 44px;
-    -webkit-appearance: none;
-    appearance: none;
-    touch-action: manipulation;
+    border-radius: 999px;
+    min-height: 46px;
+    font-weight: 600;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 24px rgba(255, 95, 75, 0.28);
+}
+
+ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 ul li {
-    list-style: none;
-    font-size: 17px;
-    padding: 12px 8px 12px 50px;
-    user-select: none;
-    cursor: pointer;
+    background: #ffffff;
+    border: 1px solid rgba(34, 48, 79, 0.08);
+    border-radius: 16px;
+    padding: 12px 14px 12px 48px;
     position: relative;
-    /* max-width: 400px; */
-    font-weight: 400;
+    cursor: pointer;
+    transition: box-shadow 0.2s ease;
+}
+
+ul li:hover {
+    box-shadow: 0 10px 18px rgba(28, 44, 85, 0.08);
 }
 
 ul li::before {
     content: '';
     position: absolute;
-    height: 28px;
-    width: 28px;
+    height: 26px;
+    width: 26px;
     border-radius: 50%;
     background-image: url(./images/unchecked.png);
     background-size: cover;
     background-position: center;
-    top: 12px;
-    left: 8px;
-}
-
-ul li.checked {
-    color: #555;
-    text-decoration: line-through;
-    font-weight: 200;
+    top: 14px;
+    left: 12px;
 }
 
 ul li.checked::before {
     background-image: url(./images/checked_2.png);
 }
 
+.task-content {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.task-text {
+    color: #1b2140;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    font-weight: 500;
+}
+
+li.checked .task-text {
+    color: #6f768b;
+    text-decoration: line-through;
+}
+
+.task-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    font-size: 0.82rem;
+    color: #6b7280;
+}
+
+.date {
+    padding: 5px 10px;
+    border-radius: 999px;
+    background: #f4f5f8;
+}
+
+.date.added {
+    color: #63676f;
+}
+
+.date.completed {
+    color: #217a4d;
+    background: rgba(33, 122, 77, 0.12);
+}
+
+.date.completed.hidden {
+    display: none;
+}
+
 ul li img {
     position: absolute;
-    right: 5px;
-    line-height: 25px;
-    text-align: center;
-    margin: 0px 3px;
-    width: 25px;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    opacity: 0.85;
 }
 
 ul li img:hover {
-    scale: 1.15;
-}
-
-ul li img:active {
-    scale: 0.9;
+    opacity: 1;
 }
 
 @media screen and (max-width:540px) {
     .todo-app {
-        margin: 30px auto 15px;
-        padding: 20px 15px 40px;
+        margin: 18px auto 12px;
+        padding: 18px 14px 20px;
     }
 
     .todo-app h2 {
-        font-size: 20px;
+        font-size: 1.35rem;
     }
 
     .todo-app h2 img {
         width: 30px;
-        margin: 0 8px;
     }
 
     .row {
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding-left: 0;
-        margin-bottom: 15px;
-        gap: 8px;
+        align-items: stretch;
+        padding: 10px;
+        margin-bottom: 16px;
+        gap: 10px;
     }
 
     button {
-        padding: 12px 30px;
-        font-size: 14px;
-        min-height: 44px;
         width: 100%;
+        padding: 12px 0;
     }
+
     input {
-        flex: 1;
-        border: none;
-        outline: none;
-        background: transparent;
-        padding: 10px;
-        text-align: center;
+        text-align: left;
         width: 100%;
-        min-height: 44px;
     }
 
     ul li {
-        font-size: 16px;
-        padding: 12px 8px 12px 50px;
+        padding: 12px 12px 12px 48px;
     }
 }

@@ -1,4 +1,4 @@
-const APP_VERSION = '2';
+const APP_VERSION = '3';
 const CACHE_NAME = `todo-pwa-v${APP_VERSION}`;
 const ASSETS = [
   './to-do.html',

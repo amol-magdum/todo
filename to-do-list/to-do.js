@@ -1,8 +1,12 @@
-const inputBox = document.getElementById("input-box");
-const listContainer = document.getElementById("list-container");
+const inputBox = document.getElementById('input-box');
+const listContainer = document.getElementById('list-container');
 const APP_VERSION = '2';
 
-// Check for app version updates
+function formatDate(date) {
+  const pad = (value) => String(value).padStart(2, '0');
+  return `${pad(date.getDate())}-${pad(date.getMonth() + 1)}-${date.getFullYear()} ${pad(date.getHours())}:${pad(date.getMinutes())}`;
+}
+
 function checkVersionUpdate() {
   const storedVersion = localStorage.getItem('appVersion');
   if (storedVersion !== APP_VERSION) {
@@ -10,61 +14,127 @@ function checkVersionUpdate() {
   }
 }
 
-// Reorganize list: unchecked tasks at top, checked at bottom
-function reorganizeTasks() {
-  const tasks = Array.from(listContainer.querySelectorAll('li'));
-  const unchecked = tasks.filter(li => !li.classList.contains('checked'));
-  const checked = tasks.filter(li => li.classList.contains('checked'));
-  
-  listContainer.innerHTML = '';
-  unchecked.forEach(li => listContainer.appendChild(li));
-  checked.forEach(li => listContainer.appendChild(li));
+function buildTaskHtml(text, addedDate, completedDate = '') {
+  return `
+    <div class="task-content">
+      <span class="task-text">${text}</span>
+      <div class="task-meta">
+        <span class="date added">Added: ${addedDate}</span>
+        <span class="date completed ${completedDate ? '' : 'hidden'}">Completed: ${completedDate}</span>
+      </div>
+    </div>
+  `;
+}
+
+function normalizeTaskItem(li) {
+  if (li.querySelector('.task-content')) {
+    return;
+  }
+
+  const existingText = li.querySelector('.task-text')
+    ? li.querySelector('.task-text').textContent.trim()
+    : li.firstChild && li.firstChild.nodeType === Node.TEXT_NODE
+    ? li.firstChild.textContent.trim()
+    : li.textContent.trim();
+
+  const isChecked = li.classList.contains('checked');
+  const addedLabel = li.querySelector('.date.added');
+  const completedLabel = li.querySelector('.date.completed');
+  const addedDate = addedLabel
+    ? addedLabel.textContent.replace(/^Added:\s*/, '')
+    : formatDate(new Date());
+  const completedDate = completedLabel && completedLabel.textContent.trim()
+    ? completedLabel.textContent.replace(/^Completed:\s*/, '')
+    : isChecked
+    ? formatDate(new Date())
+    : '';
+
+  li.innerHTML = buildTaskHtml(existingText, addedDate, completedDate);
+  if (isChecked) {
+    li.classList.add('checked');
+  }
+
+  let deleteIcon = li.querySelector('img');
+  if (!deleteIcon) {
+    deleteIcon = document.createElement('img');
+    deleteIcon.setAttribute('src', './images/delete.png');
+    deleteIcon.setAttribute('alt', 'Delete task');
+    li.appendChild(deleteIcon);
+  } else {
+    li.appendChild(deleteIcon);
+  }
 }
 
 function addTask() {
-  if (inputBox.value.length <= 1) {
-    alert("You must write task in detail");
-  } else if (inputBox.value.length >= 50) {
-    alert("Write task in 50 word only");
-  } else if (document.querySelectorAll("#list-container li").length > 9) {
-    alert("You already have 10 task, Remove few to add task");
+  const taskText = inputBox.value.trim();
+  if (taskText.length <= 1) {
+    alert('You must write task in detail');
+  } else if (taskText.length >= 100) {
+    alert('Write task in 100 characters only');
+  } else if (document.querySelectorAll('#list-container li').length > 9) {
+    alert('You already have 10 tasks. Remove one to add another.');
   } else {
-    let firstChild_li = listContainer.firstElementChild;
-    let li = document.createElement("li");
-    li.innerHTML = inputBox.value;
-    listContainer.insertBefore(li, firstChild_li);
-    let img = document.createElement("img");
-    img.setAttribute("src", "./images/delete.png");
+    const li = document.createElement('li');
+    const currentDate = formatDate(new Date());
+    li.innerHTML = buildTaskHtml(taskText, currentDate);
+    const img = document.createElement('img');
+    img.setAttribute('src', './images/delete.png');
+    img.setAttribute('alt', 'Delete task');
     li.appendChild(img);
+    listContainer.insertBefore(li, listContainer.firstElementChild);
+    saveData();
   }
-  inputBox.value = "";
-  saveData();
+  inputBox.value = '';
 }
 
-listContainer.addEventListener(
-  "click",
-  function (e) {
-    if (e.target.tagName === "LI") {
-      e.target.classList.toggle("checked");
-      reorganizeTasks();
-    } else if (e.target.tagName === "IMG") {
-      console.log(e.target.parentElement);
-      e.target.parentElement.remove();
+function toggleTaskCompletion(li) {
+  li.classList.toggle('checked');
+  const completedLabel = li.querySelector('.date.completed');
+  if (li.classList.contains('checked')) {
+    if (completedLabel) {
+      completedLabel.textContent = `Completed: ${formatDate(new Date())}`;
+      completedLabel.classList.remove('hidden');
     }
-    saveData();
-  },
-  false
-);
+  } else if (completedLabel) {
+    completedLabel.textContent = '';
+    completedLabel.classList.add('hidden');
+  }
+}
+
+listContainer.addEventListener('click', function (e) {
+  const deleteIcon = e.target.tagName === 'IMG';
+  const item = e.target.closest('li');
+  if (!item) return;
+
+  if (deleteIcon) {
+    item.remove();
+  } else {
+    toggleTaskCompletion(item);
+    reorganizeTasks();
+  }
+  saveData();
+});
+
+function reorganizeTasks() {
+  const tasks = Array.from(listContainer.querySelectorAll('li'));
+  const unchecked = tasks.filter((li) => !li.classList.contains('checked'));
+  const checked = tasks.filter((li) => li.classList.contains('checked'));
+  listContainer.innerHTML = '';
+  unchecked.forEach((li) => listContainer.appendChild(li));
+  checked.forEach((li) => listContainer.appendChild(li));
+}
 
 function saveData() {
-  localStorage.setItem("data", listContainer.innerHTML);
+  localStorage.setItem('data', listContainer.innerHTML);
 }
 
 function getData() {
-  const savedData = localStorage.getItem("data");
+  const savedData = localStorage.getItem('data');
   if (savedData) {
     listContainer.innerHTML = savedData;
+    listContainer.querySelectorAll('li').forEach(normalizeTaskItem);
   }
 }
+
 checkVersionUpdate();
 getData();
