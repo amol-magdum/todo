@@ -9,9 +9,10 @@
       "sizes": "192x192"
     },
     {
-      "src": "./images/todo-list-svgrepo-com.svg",
+      "src": "./images/gemini-svg.svg",
+      "sizes": "any",
       "type": "image/svg+xml",
-      "sizes": "512x512"
+      "purpose": "any"
     }
   ],
   "start_url": "./to-do.html",

@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+    <defs>
+        <style>
+            @keyframes float {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-10px); }
+            }
+            @keyframes draw {
+                to { stroke-dashoffset: 0; }
+            }
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            @keyframes checkPop {
+                0% { transform: scale(0); opacity: 0; }
+                50% { transform: scale(1.2); opacity: 1; }
+                100% { transform: scale(1); opacity: 1; }
+            }
+
+            .main-frame { fill: none; stroke: #1a5286; stroke-width: 32; stroke-linecap: round; stroke-linejoin: round; }
+            .accent { fill: #ffc107; }
+            .item-line { 
+                stroke: #1a5286; 
+                stroke-width: 24; 
+                stroke-linecap: round; 
+                stroke-dasharray: 200; 
+                stroke-dashoffset: 200;
+                animation: draw 1.5s ease-out forwards;
+            }
+            .checkbox { 
+                fill: none; 
+                stroke: #1a5286; 
+                stroke-width: 20; 
+                stroke-linejoin: round; 
+                opacity: 0;
+                animation: fadeIn 0.5s ease-out forwards;
+            }
+            .checkmark {
+                fill: none;
+                stroke: #1a5286;
+                stroke-width: 20;
+                stroke-linecap: round;
+                stroke-linejoin: round;
+                stroke-dasharray: 100;
+                stroke-dashoffset: 100;
+                transform-origin: center;
+            }
+
+            .floating-group { animation: float 3s ease-in-out infinite; }
+            
+            .line-1 { animation-delay: 0.5s; }
+            .line-2 { animation-delay: 0.7s; }
+            .box-1 { animation-delay: 0.3s; }
+            
+            .line-3 { animation-delay: 1.2s; }
+            .line-4 { animation-delay: 1.4s; }
+            .box-2 { animation-delay: 1.0s; }
+
+            .check-1 { 
+                animation: draw 0.5s ease-out 2s forwards, checkPop 0.4s ease-out 2s forwards; 
+            }
+        </style>
+    </defs>
+
+    <g class="floating-group">
+        <path class="main-frame" d="M128,96 h-32 a32,32 0 0,0 -32,32 v320 a32,32 0 0,0 32,32 h320 a32,32 0 0,0 32,-32 v-320 a32,32 0 0,0 -32,-32 h-32" />
+        <path class="accent" d="M192,32 h128 v64 h-128 z" />
+        <path class="main-frame" d="M192,96 v-64 a16,16 0 0,1 16,-16 h96 a16,16 0 0,1 16,16 v64" />
+
+        <rect class="checkbox box-1" x="140" y="180" width="60" height="60" rx="8" />
+        <line class="item-line line-1" x1="240" y1="190" x2="400" y2="190" />
+        <line class="item-line line-2" x1="240" y1="230" x2="350" y2="230" />
+        
+        <polyline class="checkmark check-1" points="150,210 165,225 190,195" />
+
+        <rect class="checkbox box-2" x="140" y="320" width="60" height="60" rx="8" />
+        <line class="item-line line-3" x1="240" y1="330" x2="400" y2="330" />
+        <line class="item-line line-4" x1="240" y1="370" x2="380" y2="370" />
+    </g>
+</svg>
