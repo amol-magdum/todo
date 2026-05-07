@@ -3,8 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#153677" />
     <title>To Do</title>
+    <link rel="manifest" href="manifest.json" />
     <link rel="stylesheet" href="to-do.css" />
+    <link rel="apple-touch-icon" href="./images/to-do-list.png" />
   </head>
   <body>
     <div class="container">
@@ -27,5 +30,14 @@
     </div>
 
     <script src="to-do.js"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker
+            .register('./sw.js')
+            .catch(err => console.error('Service Worker registration failed:', err));
+        });
+      }
+    </script>
   </body>
 </html>

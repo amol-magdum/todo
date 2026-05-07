@@ -40,6 +40,9 @@ function saveData() {
 }
 
 function getData() {
-  listContainer.innerHTML = localStorage.getItem("data");
+  const savedData = localStorage.getItem("data");
+  if (savedData) {
+    listContainer.innerHTML = savedData;
+  }
 }
 getData();

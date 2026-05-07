@@ -1,0 +1,21 @@
+{
+  "short_name": "ToDo",
+  "name": "Offline To-Do List",
+  "description": "A progressive web app for managing tasks offline.",
+  "icons": [
+    {
+      "src": "./images/to-do-list.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "./images/to-do-list.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "./to-do.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#153677"
+}
