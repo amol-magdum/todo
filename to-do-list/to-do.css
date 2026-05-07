@@ -12,14 +12,17 @@
     min-height: 100vh;
     background: linear-gradient(135deg, #153677, #4e085f, #fff000);
     padding: 10px;
+    padding-left: max(10px, env(safe-area-inset-left));
+    padding-right: max(10px, env(safe-area-inset-right));
+    padding-bottom: max(10px, env(safe-area-inset-bottom));
 }
 
 .todo-app {
     /* width: 100%; */
     max-width: 540px;
     background: white;
-    margin: 100px auto 20px;
-    padding: 40px 30px 70px;
+    margin: 50px auto 20px;
+    padding: 25px 20px 50px;
     border-radius: 10px;
 }
 
@@ -54,6 +57,10 @@ input {
     outline: none;
     background: transparent;
     padding: 10px;
+    font-size: 16px;
+    min-height: 44px;
+    -webkit-appearance: none;
+    appearance: none;
 }
 
 button {
@@ -65,6 +72,10 @@ button {
     font-size: 16px;
     cursor: pointer;
     border-radius: 40px;
+    min-height: 44px;
+    -webkit-appearance: none;
+    appearance: none;
+    touch-action: manipulation;
 }
 
 ul li {
@@ -114,18 +125,39 @@ ul li img:hover {
     scale: 1.15;
 }
 
+ul li img:active {
+    scale: 0.9;
+}
+
 @media screen and (max-width:540px) {
+    .todo-app {
+        margin: 30px auto 15px;
+        padding: 20px 15px 40px;
+    }
+
+    .todo-app h2 {
+        font-size: 20px;
+    }
+
+    .todo-app h2 img {
+        width: 30px;
+        margin: 0 8px;
+    }
+
     .row {
         flex-direction: column;
         justify-content: center;
         align-items: center;
         padding-left: 0;
         margin-bottom: 15px;
+        gap: 8px;
     }
 
     button {
-        padding: 8px 30px;
-        font-size: 12px;
+        padding: 12px 30px;
+        font-size: 14px;
+        min-height: 44px;
+        width: 100%;
     }
     input {
         flex: 1;
@@ -134,5 +166,12 @@ ul li img:hover {
         background: transparent;
         padding: 10px;
         text-align: center;
+        width: 100%;
+        min-height: 44px;
+    }
+
+    ul li {
+        font-size: 16px;
+        padding: 12px 8px 12px 50px;
     }
 }
