@@ -9,6 +9,16 @@ function checkVersionUpdate() {
     localStorage.setItem('appVersion', APP_VERSION);
   }
 }
+
+// Reorganize list: unchecked tasks at top, checked at bottom
+function reorganizeTasks() {
+  const tasks = Array.from(listContainer.querySelectorAll('li'));
+  const unchecked = tasks.filter(li => !li.classList.contains('checked'));
+  const checked = tasks.filter(li => li.classList.contains('checked'));
+  
+  listContainer.innerHTML = '';
+  unchecked.forEach(li => listContainer.appendChild(li));
+  checked.forEach(li => listContainer.appendChild(li));
 }
 
 function addTask() {
@@ -36,6 +46,7 @@ listContainer.addEventListener(
   function (e) {
     if (e.target.tagName === "LI") {
       e.target.classList.toggle("checked");
+      reorganizeTasks();
     } else if (e.target.tagName === "IMG") {
       console.log(e.target.parentElement);
       e.target.parentElement.remove();
