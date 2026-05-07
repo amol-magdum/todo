@@ -15,6 +15,7 @@
     }
   ],
   "start_url": "./to-do.html",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#153677"
