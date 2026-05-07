@@ -1,5 +1,15 @@
 const inputBox = document.getElementById("input-box");
 const listContainer = document.getElementById("list-container");
+const APP_VERSION = '2';
+
+// Check for app version updates
+function checkVersionUpdate() {
+  const storedVersion = localStorage.getItem('appVersion');
+  if (storedVersion !== APP_VERSION) {
+    localStorage.setItem('appVersion', APP_VERSION);
+  }
+}
+}
 
 function addTask() {
   if (inputBox.value.length <= 1) {
@@ -45,4 +55,5 @@ function getData() {
     listContainer.innerHTML = savedData;
   }
 }
+checkVersionUpdate();
 getData();
