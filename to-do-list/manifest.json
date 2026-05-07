@@ -9,8 +9,8 @@
       "sizes": "192x192"
     },
     {
-      "src": "./images/to-do-list.png",
-      "type": "image/png",
+      "src": "./images/todo-list-svgrepo-com.svg",
+      "type": "image/svg+xml",
       "sizes": "512x512"
     }
   ],
