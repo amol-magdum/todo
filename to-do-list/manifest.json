@@ -9,7 +9,7 @@
       "sizes": "192x192"
     },
     {
-      "src": "./images/gemini-svg.svg",
+      "src": "./images/loading.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"

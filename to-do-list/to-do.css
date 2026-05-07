@@ -60,15 +60,17 @@ input {
     flex: 1;
     border: none;
     outline: none;
-    background: transparent;
-    padding: 14px 0;
+    background: #ffff;
+    padding: 14px 16px;
     font-size: 16px;
     min-height: 48px;
     color: #1e1e2d;
+    border-radius: 16px;
 }
 
 input::placeholder {
     color: #8a8d9b;
+    padding-left: 14px;
 }
 
 button {
